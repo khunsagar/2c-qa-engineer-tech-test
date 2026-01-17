@@ -1,8 +1,6 @@
 ** Library Management System — Bug Reports **
 
 ## BUGID_1: Rating below minimum is accepted (-1)
-- Labels: bug, backend, validation, high
-- Severity: High
 ### Description
 Negative rating is getting accepted in request payload (rating = -1)
 ### Steps to reproduce

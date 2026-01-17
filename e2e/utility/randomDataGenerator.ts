@@ -40,11 +40,7 @@ export class RandomDataGenerator {
 
   static randomDescription(): string {
     const descriptions = [
-      'An engaging tale of adventure and discovery',
-      'A compelling story that will keep you on the edge of your seat',
-      'A thought-provoking exploration of human nature',
-      'A fascinating journey through time and space',
-      'A heartwarming story of love and friendship'
+      'Founded in 2011, Two Circles is an international sports and entertainment marketing businesss.',
     ];
     return descriptions[this.randomNumber(0, descriptions.length - 1)];
   }
@@ -54,7 +50,7 @@ export class RandomDataGenerator {
   }
 
   static randomRating(): number {
-    return Math.round((Math.random() * 5) * 10) / 10; // Random decimal between 0-5
+    return Math.round((Math.random() * 5) * 10) / 10; 
   }
 
   static generateCompleteBook() {
@@ -77,11 +73,5 @@ export class RandomDataGenerator {
     };
   }
 
-  static generateBookWithGenre() {
-    return {
-      title: this.randomTitle(),
-      author: this.randomAuthor(),
-      genre: 'Testing'
-    };
-  }
+ 
 }

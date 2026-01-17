@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { BooksApiPage } from '../../pages/books.api.page';
 import { ApiAssertions } from '../../utility/helper/apiAssertions';
 
@@ -33,6 +33,19 @@ test.describe('Feature: Create New Book', () => {
       await booksApi.attemptCreateWithoutAuthor(),
       'required'
     );
+  });
+
+  test('Sceanrios: verify 404 error when user enter only optional field ', async ({ request }) => {
+    const payload = { genre: 'Fiction' };
+    const response = await request.post('/api/books', { data: payload });
+    expect(response.status()).toBe(400);
+  });
+
+  test('Sceanrios: verify 404 error when user incorrect path varibale  ', async ({ request }) => {
+    const payload = { title: 'Test Book', author: 'Test Author' };
+    const response = await request.post('/api/book/', { data: payload });
+    expect(response.ok()).toBeFalsy();
+    expect(response.status()).toBe(404);
   });
 });
 

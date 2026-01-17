@@ -10,7 +10,6 @@ test.describe('Accessibility tests', () => {
 
     test('should have no accessibility violations on add Book page', async ({ page }) => {
      await addBookPage.clickAddBookButton(page);
-     await page.waitForTimeout(5000);
      await runAccessibilityScan(page);
     });
 

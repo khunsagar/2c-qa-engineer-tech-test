@@ -4,13 +4,13 @@ import { Page } from '@playwright/test';
 export async function runAccessibilityScan(page: Page) {
   const results = await new AxeBuilder({ page }).analyze();
 
-  const blockingViolations = results.violations.filter(
+  const accesabilityViolations = results.violations.filter(
     v => v.impact === 'critical' || v.impact === 'serious'
   );
 
-  if (blockingViolations.length > 0) {
+  if (accesabilityViolations.length > 0) {
     console.log('Accessibility violations Details:');
-    blockingViolations.forEach(v => {
+    accesabilityViolations.forEach(v => {
       console.log(`- ${v.description}`);
       console.log(`  Help: ${v.help}`);
     });
@@ -18,5 +18,5 @@ export async function runAccessibilityScan(page: Page) {
     console.log('No critical or serious accessibility violations found.');
   }
 
-  return { blockingViolations };
+  return { accesabilityViolations };
 }

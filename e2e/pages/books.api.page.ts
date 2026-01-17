@@ -45,9 +45,7 @@ export class BooksApiPage {
     
     const retrieveResponse = await this.apiClient.getBookById(this.lastCreatedBook.id);
     const retrievedBook = await ApiAssertions.verifyBookRetrieved(retrieveResponse);
-    console.log('Retrieved book with ID:', retrievedBook.id);
     
-    // Store the retrieved book
     this.lastCreatedBook = retrievedBook;
   }
 
@@ -57,14 +55,12 @@ export class BooksApiPage {
     
     return this.apiClient.createBook(this.lastBookData)
       .then(async (createResponse) => {
-        // Assert creation response
         this.lastCreatedBook = await ApiAssertions.verifySuccessfulCreation(createResponse);
         ApiAssertions.verifyBookMatchesRequest(this.lastCreatedBook, this.lastBookData);
         await ApiAssertions.verifyBookHasAllFields(this.lastCreatedBook);
         return this.lastCreatedBook.id;
       })
       .then(async (bookId) => {
-        // Chain retrieval and assert
         const retrieveResponse = await this.apiClient.getBookById(bookId);
         this.lastCreatedBook = await ApiAssertions.verifyBookRetrieved(retrieveResponse);
         ApiAssertions.verifyDataTypes(this.lastCreatedBook);
@@ -93,7 +89,7 @@ export class BooksApiPage {
     console.log('Retrieving book with ID:', this.lastCreatedBook.id);
     const response = await this.apiClient.getBookById(this.lastCreatedBook.id);
     console.log('Retrieve Created Book Response Status:', JSON.stringify(response));
-    //this.lastCreatedBook = await ApiAssertions.verifyBookRetrieved(response);
+    this.lastCreatedBook = await ApiAssertions.verifyBookRetrieved(response);
   }
 
   async attemptRetrieveNonExistentBook() {

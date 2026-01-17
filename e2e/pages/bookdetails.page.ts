@@ -1,4 +1,4 @@
-import { Page ,expect} from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 import { BookDetailsPageLocators } from '../locator';
 import { BasePage } from "./base.page";
 
@@ -15,13 +15,21 @@ export class BookDetailsPage extends BasePage {
 
   async goto(id?: number | string) {
     if (id !== undefined) {
-      await this.navigateToBookDetails(id);
+      await this.page.goto(`/book/${id}`);
     }
+    else
+    {
+      await this.page.goto('/books')
+  }
   }
 
   async getBookTitle() {
     return this.locators.bookTitle.textContent();
   }
+
+ get errorMsg() {
+  return this.page.locator("//p[text() ='Book not found']");
+}
 
   async getBookDetails() {
     const title = await this.locators.bookTitle.textContent();
@@ -52,28 +60,28 @@ export class BookDetailsPage extends BasePage {
     await this.page.waitForURL(/\/book\/\d+/, { timeout: 5000 });
     const title = await this.getBookTitle();
     expect(title).toBeTruthy();
-    
+
   }
 
-    async verifyBookDetailsPageAndAssert(addedBookTitle: string) {
+  async verifyBookDetailsPageAndAssert(addedBookTitle: string) {
     await this.page.waitForURL(/\/book\/\d+/, { timeout: 5000 });
     const title = await this.getBookTitle();
     expect(title).toContain(addedBookTitle);
-    
+
   }
 
 
- 
+
   async checkForEmptyDetails() {
     const details = await this.getBookDetails();
-    
+
     return {
       isTitleEmpty: !details.title || details.title.trim() === '',
       isAuthorEmpty: !details.author || details.author.trim() === '',
       isGenreEmpty: !details.genre || details.genre.trim() === '',
-      hasEmptyFields: 
-        !details.title || details.title.trim() === '' || 
-        !details.author || details.author.trim() === '' || 
+      hasEmptyFields:
+        !details.title || details.title.trim() === '' ||
+        !details.author || details.author.trim() === '' ||
         !details.genre || details.genre.trim() === ''
     };
   }
@@ -84,7 +92,7 @@ export class BookDetailsPage extends BasePage {
    */
   async verifyNoEmptyDetails() {
     const result = await this.checkForEmptyDetails();
-    
+
     if (result.isTitleEmpty) {
       throw new Error('Book title is empty');
     }
@@ -94,7 +102,7 @@ export class BookDetailsPage extends BasePage {
     if (result.isGenreEmpty) {
       throw new Error('Book genre is empty');
     }
-    
+
     return true;
   }
 }

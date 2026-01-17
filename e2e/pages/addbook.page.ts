@@ -91,6 +91,23 @@ async isSuccessDisplayed() {
     await expect(this.locators.authorField).toHaveJSProperty('validationMessage', 'Please fill out this field.');
   }
 
+  async verifyPublisherErrorMessage() {
+    await this.locators.authorField.fill('Test Author');
+    await this.locators.titleField.fill('Test Title');
+    await this.locators.publishedYearField.fill('000000');
+    await this.submitForm();
+    await expect(this.locators.publishedYearField).toHaveJSProperty('validationMessage', 'Value must be greater than or equal to 1000.');
+  }
+
+   async verifyPagesErrorMessage() {
+    await this.locators.authorField.fill('Test Author');
+    await this.locators.titleField.fill('Test Title');
+    await this.locators.publishedYearField.fill('1001');
+    await this.locators.pagesField.fill('-1');
+    await this.submitForm();
+    await expect(this.locators.pagesField).toHaveJSProperty('validationMessage', 'Value must be greater than or equal to 1.');
+  }
+
   async verifyAddBookPage() {
     try {
       await this.page.waitForLoadState('networkidle');
@@ -111,11 +128,11 @@ async isSuccessDisplayed() {
   }
 
   async clickBackToLibrary() {
-    await this.page.getByRole('link', { name: '← back to library'}).click({timeout: 5000});
+    await this.page.getByRole('link', { name:/← back to library/i}).click({timeout: 5000});
   }
 
   async clickBackToLibraryButton() {
-    await this.page.getByRole('link', { name: 'Back to Library' }).first().click({timeout: 5000});
+    await this.page.getByRole('link', { name:/Back to Library/i }).first().click({timeout: 5000});
   }
  
   async addCompleteBook() {

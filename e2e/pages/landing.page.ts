@@ -15,7 +15,6 @@ export class HomePage extends BasePage {
   async clickAddNewBook() {
     try {
       await this.locators.addNewBookButton.click({ timeout: 5000 });
-      // Wait for navigation to /add-book after clicking
       await this.verifyUrl('/add-book');
       console.log('✓ Navigated to Add Book page');
     } catch (error) {
@@ -26,7 +25,7 @@ export class HomePage extends BasePage {
   }
 
   async clickBookCard(index: number = 0) {
-    await this.locators.viewDetailsLink(index).click();
+    await this.locators.viewDetailsLink(index).click({timeout: 5000});
     await this.waitForPageLoad();
   }
 

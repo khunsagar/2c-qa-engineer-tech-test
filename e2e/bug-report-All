@@ -96,6 +96,7 @@ UI http://localhost:3000/book/39
 
 ### Suggested fix
 - Reject requests containing `id` with 400
+================================================================================================================================================
 
 ---
 
@@ -131,6 +132,7 @@ http://localhost:3000/book/35
 - Add uniqueness check 
 
 ---
+================================================================================================================================================
 
 ## Improvement: Title input has no character limit (UI)
 
@@ -141,35 +143,25 @@ http://localhost:3000/book/35
 1. Open Add Book form (http://localhost:3000/add-book)
 2. Enter a very long title (500+ chars) example : 'No Matter How Much You Promise to Cook or Pay the Rent You Blew It Cauze Bill Bailey Ain't Never Coming Home Again'
 3. Submit and observe UI/layout issues
+This might cuase web to crash as buffer issue 
 
 ### Suggested fix
-- Add maxLength={200} to the Title input
-- Add client-side validation and server-side length validation (e.g., 200 chars)
-- Add UI tests to verify behavior
-
+- Add maxLength={200}
 ---
 
 ## Improvement: Author input has no character limit (UI)
-- Labels: enhancement, frontend, ui, low
-- Severity: Low
+
 
 ### Description
 Author field allows very long strings (300+ chars), causing UI issues.
 
 ### Steps to reproduce
 1. Open Add Book form
-2. Enter a very long author name
+2. Enter a very long Author (500+ chars) example : 'No Matter How Much You Promise to Cook or Pay the Rent You Blew It Cauze Bill Bailey Ain't Never Coming Home Again'
 3. Submit and observe behavior
 
+This might cuase web to crash as buffer issue 
 ### Suggested fix
-- Add maxLength={100} to the Author input
-- Add client-side and server-side length validation
-- Add tests to enforce limits
+- Add maxLength={100}
 
----
 
-Notes / Suggested workflow
-- Create one issue per bug (separate issues make triage easier).
-- For backend validation issues: assign to backend maintainer; add tests and a DB constraint where applicable.
-- For UI improvements: assign to frontend with recommended maxLength values.
-- Add automated tests (unit + integration/e2e) for each rejected input case.

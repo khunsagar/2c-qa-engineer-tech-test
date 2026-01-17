@@ -9,7 +9,7 @@ test.describe('Add Book Page', () => {
         await addBookPage.goto();
     });
 
-    test.skip('should create book with valid data', async () => {
+    test('should create book with valid data', async () => {
         await addBookPage.addCompleteBook();
         await addBookPage.verifySuccessMessage();
         await addBookPage.verifyBookCreatedAndNavigated();

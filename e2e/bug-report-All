@@ -1,0 +1,167 @@
+** Library Management System — Bug Reports **
+
+## BUGID_1: Rating below minimum is accepted (-1)
+### Description
+Negative rating is getting accepted in request payload (rating = -1)
+### Steps to reproduce
+1. POST to `/api/books`
+2. Body:
+
+{
+  "title": "Tesssst Book",
+  "author": "Testssss Author",
+  "rating": -1
+}
+```
+3. Observe response 
+#### Example curl
+```
+{
+  "title": "Blue Staaaar",
+  "author": "Jane Doooooe",
+  "rating": -1
+}
+```
+### Expected
+- 400 Bad Request
+- No book created
+
+### Actual
+Response: 
+{"title":"Blue Sssstar","author":"Jane Dosssse","genre":"Unknown","publishedYear":2026,"description":"No description available.","isbn":"N/A","pages":0,"rating":-1,"id":35}
+
+### Suggested fix
+- Add server-side validation
+================================================================================================================================================
+
+## BUGID_2: Rating above maximum is accepted (6)
+- Labels: bug, backend, validation, high
+- Severity: High
+
+### Description
+rating above the upper limit is getting accepted 
+
+### Steps to reproduce
+1. POST to `/api/books` with:
+```json
+{
+  "title": "Test Book",
+  "author": "Test Author",
+  "rating": 6
+}
+```
+```
+### Expected
+- 400 Bad Request
+- Validation error: "rating must be between 0 and 5"
+
+### Actual
+{"url":"http://localhost:3000/api/books","status":201,"statusText":"Created","headers"}
+======================================================================================================================================
+---
+
+## BUGID_3: Client-supplied ID accepted on create
+
+### Description
+accepts a client-provided `id` and uses it when creating the record. ID generation should be server-side only.
+
+### Steps to reproduce
+1. POST to `/api/books` with:
+```json
+{
+  "id": 222222,
+  "title": "Test Book",
+  "author": "Test Author"
+}
+```
+
+#### Example curl
+```
+{
+"id":2902,
+"title":"ID Test Book",
+"author":"ID Test Author"
+}
+
+```
+
+### Expected
+- 400 Bad Request or ignore `id` field
+- Server assigns ID
+-
+
+### Actual
+ID accepted and book created {"title":"ID Test Book","author":"ID Test Author","genre":"Unknown","publishedYear":2026,"description":"No description available.","isbn":"N/A","pages":0,"rating":0,"id":39}
+UI http://localhost:3000/book/39
+
+### Suggested fix
+- Reject requests containing `id` with 400
+================================================================================================================================================
+
+---
+
+## Improvement: Duplicate books can be created (same title, author, ISBN)
+
+
+### Description
+ allows duplicate books with identical `title`, `author`, and `isbn`.
+
+### Steps to reproduce
+1. POST a book with title/author/isbn A
+2. POST the same details again
+3. Two separate records are created
+
+#### Example curl
+```bash
+{
+
+}
+```
+
+### Expected
+- First request: 201 Created
+- Second request: 409 Conflict (or 400) with message: "Book already exists"
+- Only one record stored for the same ISBN
+
+### Actual
+- Both requests return 201 Created, two records created
+http://localhost:3000/book/34
+http://localhost:3000/book/35
+
+### Suggested fix
+- Add uniqueness check 
+
+---
+================================================================================================================================================
+
+## Improvement: Title input has no character limit (UI)
+
+### Description
+"Add Book" form does not enforce a character limit for Title, which allows extremely long strings that break layout.
+
+### Steps to reproduce
+1. Open Add Book form (http://localhost:3000/add-book)
+2. Enter a very long title (500+ chars) example : 'No Matter How Much You Promise to Cook or Pay the Rent You Blew It Cauze Bill Bailey Ain't Never Coming Home Again'
+3. Submit and observe UI/layout issues
+This might cuase web to crash as buffer issue 
+
+### Suggested fix
+- Add maxLength={200}
+---
+
+## Improvement: Author input has no character limit (UI)
+
+
+### Description
+Author field allows very long strings (300+ chars), causing UI issues.
+
+### Steps to reproduce
+1. Open Add Book form
+2. Enter a very long Author (500+ chars) example : 'No Matter How Much You Promise to Cook or Pay the Rent You Blew It Cauze Bill Bailey Ain't Never Coming Home Again'
+3. Submit and observe behavior
+
+This might cuase web to crash as buffer issue 
+### Suggested fix
+- Add maxLength={100}
+
+

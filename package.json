@@ -8,7 +8,19 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:firefox": "playwright test --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:e2e:edge": "playwright test --project=edge",
+    "test:e2e:api": "playwright test e2e/spec/api",
+    "test:e2e:ui": "playwright test e2e/spec/ui",
+    "test:e2e:a11y": "playwright test e2e/spec/accessibility",
+    "test:e2e:mobile-android": "playwright test --project='Mobile Android (Pixel)'",
+    "test:e2e:mobile-ios": "playwright test --project='Mobile iOS (iPhone)'",
+    "test:e2e:tablet": "playwright test --project='Tablet iPad'",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "next": "15.5.2",

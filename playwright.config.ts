@@ -42,11 +42,35 @@ export default defineConfig({
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
+    {
+      name: 'edge',
+      use: { ...devices['Desktop Edge'] },
+    },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+
+    {
+      name: 'API Testing',
+      use: {
+        baseURL: 'http://localhost:3000',
+      },
+    },
+    {
+      name: 'Mobile Android (Pixel)',
+      use: { ...devices['Pixel 5'] },
+    },
+     {
+      name: 'Mobile iOS (iPhone)',
+      use: { ...devices['iPhone 12'] },
+    },
+    {
+      name: 'Tablet iPad',
+      use: { ...devices['iPad Air'] },
+    },
+
 
     /* Test against mobile viewports. */
     // {

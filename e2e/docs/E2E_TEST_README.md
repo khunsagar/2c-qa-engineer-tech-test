@@ -31,14 +31,14 @@ Application will be available at: `http://localhost:3000`
 
 ---
 
-## 🚀 Running Tests
+## Running Tests
 
-### ✅ Run All Tests
+### Run All Tests
 ```bash
 npm run test:e2e
 ```
 
-### 🎯 Test Types
+### Test Types
 
 #### **1. UI Tests**
 Test user interface interactions (forms, buttons, navigation)
@@ -66,7 +66,7 @@ npm run test:e2e
 
 ---
 
-## 🌐 Running Tests on Different Platforms
+## Running Tests on Different Platforms
 
 ### **Desktop Browsers**
 
@@ -111,7 +111,7 @@ npm run test:e2e:tablet
 
 ---
 
-## 🐛 Debug Mode
+## Debug Mode
 
 ### Run Tests in Headed Mode (Browser Visible)
 ```bash
@@ -139,7 +139,7 @@ npx playwright show-report
 
 ### Report Location ( sample reports added inside e2e as this is undergit ignore due to size)
 ```
-playwright-report/
+report/
 ├── index.html          # Main report dashboard
 └── data/              # Test execution data
 ```
